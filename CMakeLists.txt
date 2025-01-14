@@ -1,24 +1,23 @@
-﻿cmake_minimum_required(VERSION 3.14)
-project(MyApiProject VERSION 1.0 LANGUAGES CXX)
+﻿cmake_minimum_required(VERSION 3.10)
 
-# Установить стандарт C++
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+# Устанавливаем имя проекта
+project(DPAPI)
 
-# Добавить include директорию
-include_directories(${CMAKE_SOURCE_DIR}/include)
+# Указываем стандарт C++
+set(CMAKE_CXX_STANDARD 11)
 
-# Указать источник проекта
-file(GLOB SOURCES 
-    ${CMAKE_SOURCE_DIR}/src/*.cpp
-    ${CMAKE_SOURCE_DIR}/src/include/*.h
+# Указываем, где искать заголовочные файлы
+include_directories(${CMAKE_SOURCE_DIR}/src/include)
+
+# Добавляем исходные файлы
+set(SOURCE_FILES
+    src/DormandPrince.cpp
+    src/main.cpp
+    src/DormandPrince.h
 )
 
-# Создать исполняемый файл
-add_executable(MyApiExecutable ${SOURCES})
+# Указываем компиляцию исполнимого файла
+add_executable(DPAPI ${SOURCE_FILES})
 
-# Указать флаги компиляции (если нужно)
-target_compile_options(MyApiExecutable PRIVATE -Wall -Wextra -O2)
-
-# Подключение сторонних библиотек
-target_include_directories(MyApiExecutable PRIVATE src/include/nlohmann)
+# Настроим линковку с библиотеками (если необходимо)
+# target_link_libraries(DormandPrinceProject <libraries>)
