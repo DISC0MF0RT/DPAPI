@@ -1,0 +1,2 @@
+/usr/bin/ar qc libDornandPrinceLib.a CMakeFiles/DornandPrinceLib.dir/src/DormandPrince.cpp.o
+/usr/bin/ranlib libDornandPrinceLib.a

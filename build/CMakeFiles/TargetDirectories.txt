@@ -1,0 +1,4 @@
+/home/kali/Documents/DPAPI/build/CMakeFiles/DornandPrinceLib.dir
+/home/kali/Documents/DPAPI/build/CMakeFiles/DPAPI.dir
+/home/kali/Documents/DPAPI/build/CMakeFiles/edit_cache.dir
+/home/kali/Documents/DPAPI/build/CMakeFiles/rebuild_cache.dir
