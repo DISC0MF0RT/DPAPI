@@ -1,38 +1,24 @@
-# Используем базовый образ Ubuntu 20.04
+# Используем базовый образ для C++
 FROM ubuntu:20.04
 
-# Устанавливаем необходимые пакеты и зависимости
+# Устанавливаем зависимости
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    tzdata \
-    build-essential \
-    cmake \
-    g++ \
-    libssl-dev \
-    curl \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+    DEBIAN_FRONTEND=noninteractive apt-get install -y g++ cmake libssl-dev wget tzdata
 
-# Устанавливаем часовой пояс
-ARG TIMEZONE="Europe/Moscow"  # Замените на ваш часовой пояс
-ENV TZ=${TIMEZONE}
+# Устанавливаем временную зону
+ENV TZ=Europe/Moscow
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# Создаем рабочую директорию внутри контейнера
-WORKDIR /project
+# Копируем исходные файлы
+COPY lib /DPAPI/lib
+COPY src /DPAPI/src
 
-# Копируем файлы CMakeLists.txt и все остальные файлы проекта в контейнер
-COPY CMakeLists.txt /project/
-COPY src /project/src
-COPY lib /project/lib
+# Устанавливаем рабочую директорию
+WORKDIR /DPAPI
 
-# Если вы хотите использовать уже собранный бинарник, просто скопируйте его
-COPY build/DPAPI /project/build/
+# Компиляция проекта с флагом -pthread
+RUN g++ -o dpapi src/main.cpp src/DormandPrince.cpp -Ilib -std=c++17 -pthread
 
-# Если нужно собрать проект заново, используйте следующие команды:
-# RUN mkdir -p build && cd build && \
-#     cmake .. && \
-#     make
+# Команда по умолчанию для запуска приложения
+CMD ["./dpapi"]
 
-# Указываем команду для запуска приложения
-CMD ["./build/DPAPI"]
